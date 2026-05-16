@@ -6,6 +6,7 @@ Records runtime for comparison analysis in the Group Report.
 
 import subprocess
 import sys
+import os
 import time
 
 
@@ -27,20 +28,27 @@ def run_job(script_path, job_name):
 
 
 def main():
+    # Get mapreduce directory
+    mapreduce_dir = os.path.dirname(os.path.abspath(__file__))
+
     print("=" * 70)
     print("MapReduce Baseline Analytics - All Jobs")
     print("=" * 70)
+    print(f"Working directory: {mapreduce_dir}")
 
     total_start = time.time()
 
     # Job 1
-    t1 = run_job('job1_request_count/run.py', 'Job 1: Request Count')
+    job1_path = os.path.join(mapreduce_dir, 'job1_request_count', 'run.py')
+    t1 = run_job(job1_path, 'Job 1: Request Count')
 
     # Job 2
-    t2 = run_job('job2_error_count/run.py', 'Job 2: Error Count')
+    job2_path = os.path.join(mapreduce_dir, 'job2_error_count', 'run.py')
+    t2 = run_job(job2_path, 'Job 2: Error Count')
 
     # Job 3
-    t3 = run_job('job3_slow_endpoints/run.py', 'Job 3: Slow Endpoints')
+    job3_path = os.path.join(mapreduce_dir, 'job3_slow_endpoints', 'run.py')
+    t3 = run_job(job3_path, 'Job 3: Slow Endpoints')
 
     total_elapsed = time.time() - total_start
 
